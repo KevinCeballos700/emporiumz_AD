@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmporiumZ – Loginl</title>
+
+  <!-- Fuentes y librerías externas -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    rel="stylesheet"
+  />
+
+  
+  <style>
+    /* RESET Y TIPOGRAFÍA */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Arial, sans-serif; background: #6996da; color:#020202; }
+
+    /* SPINNER GLOBAL */
+    #loading-spinner {
+      display: none;
+      position: fixed; top:50%; left:50%;
+      transform: translate(-50%,-50%);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    /* ==== ESTILOS LOGIN */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #6996da;
+      margin: 0;
+      padding: 0;
+      color: #020202;
+    }
+
+    header {
+      background-color: #354586;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    .emporium-title {
+      font-family: 'Irish Grover', cursive;
+      font-size: 36px;
+      color: white;
+      margin: 0;
+    }
+
+    .main-content {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+      transition: opacity 0.5s ease;
+    }
+
+    .form-section.fade.hidden {
+      opacity: 0;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #615fc2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background-color: #fa0000;
+    }
+
+    .tab {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+
+    .tab button {
+      flex: 1;
+      max-width: 200px;
+      margin: 0 5px;
+      background-color: #e0e0e0;
+      color: #24292E;
+    }
+
+    .tab button.active {
+      background-color: #085531;
+      color: #fff;
+    }
+
+    .link-center {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .link-center a {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .link-center a:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-container .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .btn-back {
+      background-color: #aaa;
+      margin-top: 10px;
+    }
+
+    .btn-back:hover {
+      background-color: #888;
+    }
+
+    #loading-spinner {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 4px;
+    }
+
+    #password-strength {
+      height: 8px;
+      background-color: #ccc;
+      border-radius: 4px;
+      margin-top: 5px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+
+
+
+    /* ==== ESTILOS USER-APP  */
+      
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+    }
+    /* Header */
+    header {
+      background-color: #354586;
+      color: #fff;
+      padding: 40px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .store-name {
+      font-family: 'Irish Grover', cursive;
+      font-size: 42px;
+      font-weight: bold;
+    }
+    .menu-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .search-bar {
+     position: relative;
+    }
+    .search-bar input[type="text"] {
+      padding: 10px;
+      width: 400px;
+      border: none;
+      border-radius: 7px;
+    }
+    .search-suggestions {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: #e0d6cd;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      max-height: 240px;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+      display: none;        /* oculto por defecto */
+    }
+
+    .search-suggestions .suggestion {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-suggestions .suggestion:hover {
+      background: #c076a7;
+    }
+
+    .search-suggestions .suggestion img {
+      width: 40px; height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+
+    .icons {
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+    }
+    .icons a {
+      color: #fff;
+      font-size: 24px;
+      margin-left: 25px;
+      text-decoration: none;
+    }
+    /* Navbar */
+    nav {
+      background-color: #4A90E2;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    nav ul li {
+      position: relative;
+    }
+    nav ul li a {
+      display: block;
+      padding: 19px 28px;
+      color: #fff;
+      text-decoration: none;
+    }
+    nav ul li a:hover {
+      background-color: #19191b;
+    }
+    /* Dropdown para Categorías */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #65bed4;
+      top: 100%;
+      left: 0;
+      min-width: 150px;
+      z-index: 1;
+    }
+    .dropdown-content a {
+      padding: 10px;
+      display: block;
+      color: #fff;
+      text-decoration: none;
+    }
+    .dropdown-content a:hover {
+      background-color: #d16565;
+    }
+    li:hover .dropdown-content {
+      display: block;
+    }
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 20px;
+      background-color: #dbd2d2;
+      font-size: 14px;
+    }
+    .breadcrumb a {
+      color: #333;
+      text-decoration: none;
+      margin-right: 5px;
+    }
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+    .breadcrumb span {
+      margin-right: 5px;
+    }
+    /* Contenido principal */
+    .content {
+      padding: 20px;
+    }
+    /* Contenedores para Categorías  */
+    .category-container {
+      width: 100%;
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .category-container h1 {
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .category-container a {
+        color:#aaa
+          
+
+    }
+    .category-container:hover {
+        background-color: #e41111;
+
+    }  
+    
+    /* Agregar estilos para la interfaz de rastreo */
+    .tracking-container {
+      background: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .tracking-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .tracking-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .tracking-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #354586;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tracking-container button:hover {
+      background-color: #2a3f67;
+    }
+    .tracking-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .tracking-table th, .tracking-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    .tracking-table th {
+      background-color: #354586;
+      color: white;
+    }
+    .view-more {
+      cursor: pointer;
+      color: #007BFF;
+      text-decoration: underline;
+      position: relative; /* Para el tooltip */
+    }
+    .view-more:hover::after {
+      content: "Ver detalles adicionales";
+      position: absolute;
+      left: 0;
+      bottom: 100%; /* Muestra el tooltip arriba del símbolo */
+      background: #333;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+      white-space: nowrap;
+      z-index: 10;
+      font-size: 12px;
+    }
+    .content-details {
+      display: none;
+      margin-top: 10px;
+      background: #e9ecef;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .credential-container {
+      margin-top: 10px;
+      display: none;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+
+    /* (Opcional) Sección de Ofertas */
+    .offers {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .offers h2 {
+      color: #E74C3C;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    .product-grid {
+     display: flex;
+     justify-content: space-between; /* Distribuye el espacio entre los productos */
+     flex-wrap: wrap; /* Permite que los productos se ajusten a la siguiente línea si no hay suficiente espacio */
+     gap: 20px; /* Espacio entre los productos */
+    }
+    .product-card {
+     flex: 1 1 30%; /* Cada producto ocupará aproximadamente un 30% del ancho del contenedor */
+      max-width: 350px; /* Limita el ancho máximo de cada producto */
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .price {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* INTERFASE DE FILTROS */
+    .filter-container {
+      background: #add2e7;
+      border: 1px solid #ddd;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    .filter-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 36px;
+      color: #000000;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-around;
+    }
+    .filter-group {
+      flex: 1 1 200px;
+      background: #add2e7;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .filter-group h3 {
+      margin-bottom: 10px;
+      color: #4A90E2;
+    }
+    .filter-group label {
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+    #applyFiltersButton {
+      display: block;
+      margin: 20px auto 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #7938c4;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #applyFiltersButton:hover {
+      background-color: #dd0a0a;
+    }
+
+    /* INTERFASE DE AYUDA */
+    .help-container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .help-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #000000;
+      font-weight: normal;
+    }
+    .help-container p {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .faq details {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      background: #d8d5d5;
+      transition: background 0.3s;
+    }
+    .faq details[open] {
+      background: #e6eaf3;
+    }
+    .faq details summary {
+      font-weight: 600;
+      font-size: 18px;
+      color: #354586;
+      cursor: pointer;
+      outline: none;
+    }
+    .faq details p {
+      padding-left: 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    /* SECCIÓN DE CONTACTO (para Ayuda) */
+    .contact-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
+    .contact-box {
+      flex: 1;
+      min-width: 250px;
+      background: #f1f3f6;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .contact-box:hover {
+      transform: translateY(-5px);
+    }
+    .contact-box h3 {
+      margin-bottom: 10px;
+      color: #18ad39;
+      font-size: 20px;
+    }
+    .contact-box p {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .contact-box a {
+      display: inline-block;
+      background: #a8456e;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      font-size: 16px;
+    }
+    .contact-box a:hover {
+      background: #2a3f67;
+    }
+
+    /* CART SIDEBAR (DESPLEGABLE DESDE LA DERECHA) */
+    /* Overlay oscuro */
+    #cartOverlay {
+     position: fixed;
+     top: 0; left: 0; right: 0; bottom: 0;
+     background: rgba(0, 0, 0, 0.4);
+     z-index: 998;
+     display: none;
+     opacity: 0;
+     transition: opacity 0.3s ease;
+    }
+    #cartOverlay.active {
+     display: block;
+     opacity: 1;
+    }
+    .cart-sidebar {
+      position: fixed;
+      top: 0; right: 0;
+      width: 400px;
+      height: 100%;
+      background-color: #ffffff;
+      border-left: 4px solid #354586;     /* azul EmporiumZ */
+      box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+      transition: transform 0.4s ease;
+      z-index: 999;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .cart-sidebar.active {
+      transform: translateX(0);
+    }
+    .cart-sidebar .close-cart {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #888;
+    }
+    .cart-sidebar h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #354586;
+      font-size: 24px;
+    }
+    .cart-sidebar table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .cart-sidebar thead {
+      background-color: #f0f0f0;
+    }
+    .cart-sidebar thead th {
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 2px solid #ddd;
+    }
+    .cart-sidebar tbody td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+    .cart-sidebar tbody tr:hover {
+      background-color: #f9f9f9;
+    }
+    .cart-sidebar .remove-button {
+      background: transparent;
+      border: none;
+      color: #e74c3c;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .cart-summary {
+      text-align: right;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    .checkout-button {
+      display: block;
+      width: 100%;
+      margin: 20px 0;
+      padding: 15px;
+      background-color: rgb(47, 33, 124);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-transform: uppercase;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .checkout-button:hover {
+      background-color: #672a43;
+    }
+    /* INTERFASE DE CHECKOUT */
+    .checkout-container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: #f7f9fc;
+      border: 1px solid #ccc;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .checkout-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #000000;
+      font-size: 28px;
+    }
+    .checkout-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #cfc9c9;
+    }
+    .checkout-section h2 {
+      font-size: 20px;
+      color: #354586;
+      margin-bottom: 10px;
+    }
+    .checkout-section p {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .checkout-section input[type="text"],
+    .checkout-section input[type="date"],
+    .checkout-section textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .checkout-section textarea {
+      resize: vertical;
+    }
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .checkout-img {
+     margin-right: 12px;
+     border: 1px solid #ddd;
+     border-radius: 4px;
+    }
+
+    .checkout-details p {
+      margin: 2px 0;
+    }
+
+    
+    .checkout-summary {
+      text-align: right;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .btn-pay {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #354586;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-transform: uppercase;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .btn-pay:hover {
+      background-color: #2a327c;
+    }
+    /* Modal del perfil */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #f4f4f4;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 4px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+    }
+    /* Responsividad básica */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+      }
+      .menu-right {
+        flex-direction: column;
+      }
+      .icons {
+        margin-top: 10px;
+      }
+      .product-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .search-bar input[type="text"] {
+        width: 100%;
+      }
+    }
+
+
+    
+    
+
+
+
+
+
+    /* ==== ESTILOS ADMIN-APP  */
+    /* Dropdown Administrador en header */
+    .admin-dropdown {
+      position: relative;
+      margin-left: 20px;
+    }
+    /* Mostrar lista solo cuando esté abierto */
+    .admin-dropdown.open .admin-list {
+      display: block;
+    }
+
+    .admin-title {
+      color: black;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .admin-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: none;
+      position: absolute;
+      background: #f4f4f4;
+      top: 100%;
+      left: 0;
+      border-radius: 4px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 200;
+      min-width: 220px;
+    }
+    .admin-list li {
+      padding: 8px 12px;
+      border-bottom: 1px solid #ccc;
+    }
+    .admin-list li:last-child {
+      border-bottom: none;
+    }
+    .admin-list li a {
+      text-decoration: none;
+      color: black;
+    }
+    .admin-list li a:hover {
+      color: #354586;
+    }
+    /* NAV PRINCIPAL – idéntico al usuario */
+    .main-nav {
+      background: #615fc2;
+      padding: 10px 0;
+    }
+    .main-nav .nav-list {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .main-nav .nav-item {
+      position: relative;
+      margin: 0 15px;
+    }
+    .main-nav .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 8px;
+      transition: color 0.2s;
+    }
+    .main-nav .nav-link:hover {
+      color: #ffd700;
+    }
+   .main-nav .nav-has-dropdown .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+     background: #fff;
+     border-radius: 4px;
+     box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+     z-index: 100;
+    }
+    .main-nav .nav-has-dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .main-nav .dropdown-link {
+      display: block;
+      padding: 8px 12px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+   .main-nav .dropdown-link:hover {
+      background: #f4f4f4;
+      color: #615fc2;
+    }    
+    .product-image-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .product-hover-buttons {
+      width: 100%;
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.9);
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .product-card:hover .product-hover-buttons {
+      bottom: 0;
+    }
+    .details-btn, .add-cart-btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .details-btn {
+      background: #354586;
+      color: white;
+    }
+    .add-cart-btn {
+      background: #4CAF50;
+      color: white;
+    }
+    .product-image-small {
+     width: 380px;
+     height: 580px;
+     object-fit: contain;
+    }
+    /* === Inventarios: Dashboard y Listado === */
+    .inventory-management {
+      background: #f7f9fc;
+      padding: 20px;
+    }
+    .inventory-dashboard {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .inventory-dashboard .card {
+      flex: 1;
+      background: white;
+      border-left: 4px solid #354586;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .inventory-dashboard .card:hover {
+      transform: translateY(-5px);
+    }
+    .search-inventory {
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #inventoryTable {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #inventoryTable th,
+    #inventoryTable td {
+      padding: 8px 12px;
+      border: 1px solid #e0e0e0;
+    }
+    #inventoryTable th {
+      background: #354586;
+      color: white;
+    }
+    .btn-action {
+      background: #4A90E2;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      margin-right: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-action:hover {
+       background: #2a6faf;
+    }
+    /* Modal de detalle */
+    #invDetailModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1001;
+      justify-content: center;
+      align-items: center;
+    }
+    #invDetailModal.active {
+      display: flex;
+    }
+    #invDetailModal .modal-content {
+      background: #fff;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 8px;
+      padding: 20px;
+      position: relative;
+    }
+    #closeInvDetail {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    /* Envios y logistica */
+    main {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    section {
+      background-color: #fff;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 5px;
+    }
+    
+    /* Estilos para el buscador */
+    #searchInput {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    
+    /* Estilos para las tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table th,
+    table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    table th {
+      background-color: #f0f0f0;
+    }
+    
+    /* Estilos del acordeón */
+    .accordion {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .accordion-item {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      background: #e6f2ff;
+      padding: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+    .accordion-header:hover {
+      background: #cce0ff;
+    }
+    .accordion-content {
+      background: #fff;
+      padding: 0 15px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .accordion-item.active .accordion-content {
+      padding: 15px;
+      max-height: 1000px; /* Altura suficiente para el contenido */
+    }
+
+    /* Moulo de analisis y reportes */
+
+    main {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    /* Contenedor de pestañas */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #ddd;
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      border: none;
+      background: #e6f2ff;
+      color: #004080;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-right: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 1rem;
+    }
+    .tab-button:hover {
+      background: #cce0ff;
+    }
+    .tab-button.active {
+      background: #fff;
+      border-bottom: 2px solid #fff;
+    }
+    /* Contenido de cada pestaña */
+    .tab-content {
+      display: none;
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    /* Tarjetas de indicadores */
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .card {
+      flex: 1;
+      min-width: 200px;
+      background: #e6f2ff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #004080;
+    }
+    /* Estilos para tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    table th,
+    table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    table th {
+      background-color: #f0f0f0;
+    }
+    /* Estilos generales para secciones dentro de la pestaña */
+    section {
+      margin-bottom: 30px;
+    }
+    section h3 {
+      margin-bottom: 10px;
+      color: #004080;
+    }
+    footer {
+      background: #004080;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+
+    /* Estilos para la interfaz de Crear Promoción */
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #004080;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+      color: #004080;
+    }
+    input[type="number"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px;
+      background-color: #004080;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #0059b3;
+    }
+    #mensaje {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Estilos para la interfaz de Base de Datos de Clientes */
+    /* Estilos generales */
+    
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    .search-container {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .search-container input[type="text"] {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    .export-btn {
+      padding: 10px 20px;
+      background: #004080;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table th,
+    table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    table th {
+      background-color: #e0e0e0;
+      font-weight: bold;
+      cursor: pointer; /* para indicar ordenamiento */
+    }
+    table tbody tr {
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    table tbody tr:hover {
+      background-color: #f9f9f9;
+    }
+    /* Botones de acción en cada fila */
+    .action-btn {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .edit-btn {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+    .delete-btn {
+      background-color: #E74C3C;
+      color: #fff;
+    }
+    /* Modal de edición */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; 
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+    }
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #555;
+      cursor: pointer;
+    }
+
+    /* -------------- Modales genéricos -------------- */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+    .modal.show {
+      display: block;
+      opacity: 1;
+    }
+    .modal-content {
+      background: #fff;
+      margin: 2rem auto;
+      padding: 1rem;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 6px;
+      transform: translateY(100px);
+      transition: transform 0.3s ease;
+    }
+    .modal.show .modal-content {
+      transform: translateY(0);
+    }
+    /* -------------- Bulk Reorder -------------- */
+    .bulk-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 1rem 0;
+    }
+    .bulk-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .bulk-item label {
+      flex: 1;
+      margin-right: 1rem;
+    }
+    /* -------------- Botones -------------- */
+    .bulk-btn {
+      background: #354586;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .bulk-btn:hover {
+      background: #2a356f;
+    }
+    /* -------------- CSV Dropzone (Ajuste Masivo) -------------- */
+    .dropzone {
+      border: 2px dashed #ccc;
+      padding: 2rem;
+      text-align: center;
+      color: #666;
+      transition: background 0.2s;
+    }
+    .dropzone.dragover {
+      background: #f0f8ff;
+    }
+    @media (min-width: 576px) {
+      /* Tablet/Desktop: modal-content ancho mayor */
+      .modal-content { max-width: 700px; }
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <!-- SPINNER -->
+  <div id="loading-spinner">Cargando…</div>
+ 
+  <!-- WRAPPER LOGIN -->
+  <div id="login-wrapper">
+    <header>
+      <h1 class="emporium-title">EmporiumZ</h1>
+    </header>
+    <div class="main-content">
+      <h1 id="page-title">Inicio de sesión</h1>
+
+      <div class="link-center register-link">
+        <a href="#" id="show-register">¿No tiene una cuenta? Créala aquí</a>
+      </div>
+
+      <div class="tab">
+        <button id="user-tab" class="active">Ingreso usuarios</button>
+        <button id="admin-tab">Ingreso administrativos</button>
+      </div>
+
+      <!-- USUARIO -->
+      <div id="user-login-form" class="form-section">
+        <form id="user-login-form-element">
+          <div class="form-group">
+            <label for="user-email-phone">Contacto (email o teléfono)</label>
+            <input type="text" id="user-email-phone" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <button type="button" id="send-code-btn">Enviar código</button>
+          </div>
+          <div class="form-group">
+            <label for="verification-code">Código (6 dígitos)</label>
+            <input type="text" id="verification-code" pattern="\d{6}" autocomplete="one-time-code">
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" autocomplete="current-password">
+          </div>
+          <div class="form-group">
+            <button type="submit">Ingresar</button>
+          </div>
+          <div class="link-center forgot-password-link">
+            <a href="#" id="show-forgot">¿Has olvidado tu contraseña?</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="admin-login-form" class="form-section" style="display:none">
+        <form id="admin-login-form-element">
+          <div class="form-group">
+            <label for="admin-user-id">ID de usuario</label>
+            <input type="text" id="admin-user-id" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Contraseña</label>
+            <input type="password" id="admin-password" autocomplete="current-password">
+          </div>
+            <div class="form-group">
+            <button type="submit">Ingresar</button>
+          </div>
+          <button type="button" class="btn-back">Volver</button>
+        </form>
+      </div>
+
+      <!-- REGISTRO -->
+      <div id="register-form" class="form-section" style="display:none">
+        <form id="register-form-element">
+          <div class="form-group">
+            <label for="full-name">Nombre completo</label>
+            <input type="text" id="full-name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="reg-email-phone">Contacto (email o teléfono)</label>
+            <input type="text" id="reg-email-phone" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Contraseña</label>
+            <input type="password" id="reg-password" required autocomplete="new-password">
+          </div>
+          <div class="form-group">
+            <button type="submit">Continuar</button>
+          </div>
+          <button type="button" class="btn-back">Volver</button>
+        </form>
+      </div>
+
+      <!-- RECUPERAR CONTRASEÑA -->
+      <div id="forgot-password-form" class="form-section" style="display:none">
+        <form id="forgot-password-form-element">
+          <div class="form-group">
+            <label for="fp-email-phone">Contacto</label>
+            <input type="text" id="fp-email-phone" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <button type="button" id="send-recovery-btn">Enviar enlace de recuperación</button>
+          </div>
+          <button type="button" class="btn-back">Volver</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ================================= -->
+  <!-- WRAPPER USER-APP MENU USUARIO -->
+  <!-- ================================= -->
+  <div id="user-app" style="display: none;">
+   <header>
+      <!-- Título de la tienda -->
+      <div class="store-name">EmporiumZ</div>
+      <div class="menu-right">
+        <!-- Buscador -->
+        <div class="search-bar">
+          <input
+           type="text"
+           id="searchInput"
+           placeholder="Buscar productos..."
+          />
+          <div id="searchSuggestions" class="search-suggestions"></div>
+       </div>
+    
+        <!-- Iconos: carrito y perfil -->
+        <div class="icons">
+          <a href="#" id="cartIcon" title="Carrito">&#128722;</a>
+          <a href="#" id="profileIcon" title="Perfil">&#128100;</a>
+        </div>
+      </div>
+    </header>
+       <!-- Navbar -->
+     <nav>
+       <ul>
+         <li><a href="#" data-page="inicio">Inicio</a></li>
+         <li>
+            <a href="#" data-page="categorias">Categorías</a>
+            <div class="dropdown-content">…</div>
+          </li>
+          <li><a href="#" data-page="rastrear">Rastrear envío</a></li>
+          <li><a href="#" data-page="filtros">Filtros</a></li>
+          <li><a href="#" data-page="ayuda">Ayuda</a></li>
+        </ul>
+     </nav>
+  
+     <!-- Breadcrumb -->
+     <div class="breadcrumb">
+       <a href="#">Inicio</a>
+     </div>
+  
+     <!-- Contenido principal -->
+     <div class="content">
+       <!-- Vista home se mostrará inicialmente -->
+     </div>
+
+     <!-- Call to Action -->
+  
+  
+     <!-- Interfaz de rastreo de envíos -->
+     <div id="trackingContainer" class="tracking-container" style="display: none;">
+       <h2>Rastrear Envío</h2>
+       <input type="text" id="trackingNumber" placeholder="Por ejemplo: G-2477645">
+       <button id="trackButton">Rastrear</button>
+       <div id="trackingResult" style="margin-top: 20px;"></div>
+     </div>
+  
+     <!-- CART SIDEBAR (desplegable desde la derecha) -->
+     <div id="cartSidebar" class="cart-sidebar">
+       <span class="close-cart" id="closeCart">&times;</span>
+       <h1>Carrito de Compras</h1>
+       <table>
+         <thead>
+           <tr>
+             <th>Producto</th>
+             <th>Cant.</th>
+             <th>Precio</th>
+             <th>Subtotal</th>
+             <th>Quitar</th>
+           </tr>
+         </thead>
+         <tbody id="cartItems"> </tbody>
+       </table> 
+       <div class="cart-summary">
+         <strong>Total: $<span id="cartTotal">0</span></strong>
+       </div>
+       <button class="checkout-button">
+          Proceder a pagar
+        </button>
+     </div>
+  
+     <!-- INTERFASE DE CHECKOUT (inicialmente oculta) -->
+    <div id="checkoutContainer" class="checkout-container" style="display: none;">
+       <h1>Proceso de Pago</h1>
+
+       
+
+       <section class="checkout-section">
+         <h2>Dirección de entrega</h2>
+         <p id="addressInfo">No se ha configurado.</p>
+         <button id="configureAddress">Configurar dirección</button>
+       </section>
+
+       <section class="checkout-section">
+         <h2>Productos</h2>
+         <div id="checkoutItems"></div>
+       </section>
+
+       <section class="checkout-section">
+         <h2>Fecha de entrega estimada</h2>
+         <p>Su pedido llegará en 7 días a partir de la fecha de confirmación.</p>
+         <p id="estimatedDelivery"></p>
+       </section>
+
+       <section class="checkout-section">
+         <h2>Mensaje al vendedor</h2>
+         <textarea id="sellerMessage" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+       </section>
+
+       <section class="checkout-section">
+         <h2>Opciones de pago</h2>
+         <label><input type="radio" name="payment" value="tarjeta" checked> Tarjeta de crédito/débito</label><br>
+         <label><input type="radio" name="payment" value="paypal"> PayPal</label><br>
+         <label><input type="radio" name="payment" value="transferencia"> Transferencia bancaria</label>
+       </section>
+
+       <div class="checkout-summary">
+         <p><strong>Total a pagar: $<span id="checkoutTotal">0</span></strong></p>
+       </div>
+       <button class="btn-pay" id="confirmPayBtn">Confirmar y pagar</button>
+     </div>
+
+     <!-- Overlay semitransparente bajo el carrito -->
+     <div id="cartOverlay" class="cart-overlay"></div>
+  
+     
+     <!-- Modal para el perfil -->
+     <div id="profileModal" class="modal">
+       <div class="modal-content">
+         <span class="close">&times;</span>
+         <h2>Datos del cliente</h2>
+         <p><strong>Nombre:</strong> </p>
+         <p><strong>Email:</strong> </p>
+         <p><strong>Teléfono:</strong> </p>
+         <p><strong>Dirección:</strong> </p>
+         <div id="profile-details"></div>
+       </div>
+     </div> 
+  </div>
+ 
+  
+
+
+
+  
+
+  <!-- ================================= -->
+  <!-- WRAPPER ADMIN-APP MENU -->
+  <!-- ================================= -->
+  <div id="admin-app" style="display:none;">
+    <!-- HEADER ADMINISTRADOR -->
+    <header>
+      <div class="store-name">EmporiumZ</div>
+      <div class="menu-right">
+        <!-- Buscador -->
+        <div class="search-bar">
+          <input
+           type="text"
+           id="searchInput"
+           placeholder="Buscar productos..."
+          />
+          <div id="searchSuggestions" class="search-suggestions"></div>
+       </div>
+        <!-- Dropdown Administrador en el header -->
+        <div class="admin-dropdown">
+          <span class="admin-title">Administrador &#9662;</span>
+          <ul class="admin-list">
+            <li id="gestionInventarios"><a href="#">Gestion de inventarios</a></li>
+            <li id="adminEnviosLi"><a href="#">Administracion de envios/logistica</a></li>
+            <li id="analisisReportes"><a href="#">Analisis y reportes</a></li>  
+            <li id="ofertasDescuentos"><a href="#">Ofertas y descuentos</a></li>
+            <li id="baseDatosClientes"><a href="#">Base de datos clientes</a></li>
+          </ul>
+        </div>
+        <!-- Iconos: carrito y perfil -->
+        <div class="icons">
+          <a href="#" id="cartIcon" title="Carrito">&#128722;</a>
+          <a href="#" id="profileIcon" title="Perfil">&#128100;</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAV PRINCIPAL (idéntico al usuario) -->
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#" data-page="inicio" class="nav-link">Inicio</a></li>
+        <li class="nav-item nav-has-dropdown">
+          <a href="#" data-page="categorias" class="nav-link">Categorías</a>
+          <div class="dropdown-content">
+            <a href="#" data-page="zapatos" class="dropdown-link">Zapatos</a>
+            <a href="#" data-page="ropa" class="dropdown-link">Ropa</a>
+            <a href="#" data-page="electronica" class="dropdown-link">Electrónica</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="#" data-page="rastrear" class="nav-link">Rastrear envío</a></li>
+        <li class="nav-item"><a href="#" data-page="filtros" class="nav-link">Filtros</a></li>
+        <li class="nav-item"><a href="#" data-page="ayuda" class="nav-link">Ayuda</a></li>
+      </ul>
+   </nav>
+
+    <!-- Breadcrumb y contenido intactos -->
+    <div class="breadcrumb"><a href="#">Inicio</a></div>
+    <div class="content"></div>
+ </div>
+
+
+    <!-- Call to Action -->
+
+   <!-- === GESTIÓN DE INVENTARIOS === -->
+    <div id="gestionInventariosDiv" class="admin-section" style="display:none;">
+     <main class="inventory-management">
+        <!-- Botón para volver al menú principal -->
+        <button id="volverAlMenuPrincipalInv" class="btn-action" style="margin-bottom:20px;">
+          ← Volver al menú principal
+        </button>
+       <!-- 1) Dashboard de indicadores -->
+       <div class="inventory-dashboard">
+         <div class="card">
+           <h3>Productos Activos</h3>
+           <p id="invTotalProducts">0</p>
+         </div>
+         <div class="card">
+           <h3>Valor Total</h3>
+           <p id="invTotalValue">$0</p>
+         </div>
+         <div class="card">
+           <h3>Bajo Stock</h3>
+           <p id="invLowStock">0</p>
+         </div>
+         <div class="card">
+           <h3>Top 5 Mov.</h3>
+           <canvas id="inventoryChart" height="80"></canvas>
+         </div>
+       </div>
+
+       <!-- 2) Listado de productos -->
+       <section class="checkout-section">
+         <h2>Listado de Productos</h2>
+         <input id="invSearch" class="search-inventory" placeholder="🔍 Buscar SKU o nombre">
+         <table id="inventoryTable">
+           <thead>
+             <tr>
+               <th>SKU</th><th>Nombre</th><th>Stock</th><th>Reorden</th><th>Precio</th><th>Acciones</th>
+             </tr>
+           </thead>
+           <tbody></tbody>
+         </table>
+        </section>
+
+       <!-- 3) Ficha detallada en modal -->
+       <div id="invDetailModal" class="modal">
+         <div class="modal-content">
+           <span class="close" id="closeInvDetail">&times;</span>
+           <div id="invDetailBody"></div>
+         </div>
+       </div>
+
+       <!-- 4) Acciones masivas -->
+       <section class="checkout-section">
+         <button id="bulkReorder" class="btn-action">🛒 Crear Orden de Compra Masiva</button>
+         <button id="bulkAdjust" class="btn-action">✏️ Ajustar Stock Masivo</button>
+       </section>
+
+     </main>
+    </div>
+   <!-- === FIN GESTIÓN DE INVENTARIOS === -->
+
+
+
+  <div id="adminEnvios"        class="admin-section" style="display:none;">
+    <main>
+      <button id="volverAlMenuPrincipal">Volver al menú principal</button>
+      <!-- Sección fija: Gestión de pedidos y envíos -->
+      <section id="gestion-pedidos">
+        <h2>Gestión de pedidos y envíos</h2>
+        <!-- Buscador que filtra por número de guía -->
+        <input type="text" id="searchInput" placeholder="Buscar por número de guía..." onkeyup="searchTable()">
+        <table id="pedidosTable">
+          <thead>
+            <tr>
+              <th>Número de guía</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Contenido</th>
+              <th>Última actualización</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>G-1001</td>
+              <td>Juan Pérez</td>
+              <td>10/06/2025</td>
+              <td>Enviado</td>
+              <td>Electrónica</td>
+              <td>11:00 AM</td>
+            </tr>
+            <tr>
+              <td>G-1002</td>
+              <td>María Gómez</td>
+              <td>10/06/2025</td>
+              <td>En Proceso</td>
+              <td>Accesorios</td>
+              <td>10:30 AM</td>
+            </tr>
+            <tr>
+              <td>G-1003</td>
+              <td>Carlos Díaz</td>
+              <td>09/06/2025</td>
+              <td>Pendiente</td>
+              <td>Ropa</td>
+              <td>09:45 AM</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      
+      <!-- Acordeón para otras funcionalidades -->
+      <ul class="accordion">
+        <!-- Integración con transportadoras -->
+        <li class="accordion-item">
+          <div class="accordion-header">Integración con transportadoras</div>
+          <div class="accordion-content">
+            <p>Conecta y sincroniza con diversas transportadoras para optimizar costos y tiempos de envío.</p>
+            <ul>
+              <li><strong>Transportadora A:</strong> API - Clave API: ABC123</li>
+              <li><strong>Transportadora B:</strong> API - Clave API: XYZ789</li>
+              <li><strong>Transportadora C:</strong> API - Clave API: LMN456</li>
+            </ul>
+          </div>
+        </li>
+        
+        <!-- Optimización logística -->
+        <li class="accordion-item">
+          <div class="accordion-header">Optimización logística</div>
+          <div class="accordion-content">
+            <p>Planifica rutas y procesos para reducir tiempos y costos de entrega.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ruta</th>
+                  <th>Tiempo Estimado</th>
+                  <th>Distancia</th>
+                  <th>Estatus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ruta Norte</td>
+                  <td>45 min</td>
+                  <td>30 km</td>
+                  <td>En curso</td>
+                </tr>
+                <tr>
+                  <td>Ruta Sur</td>
+                  <td>60 min</td>
+                  <td>45 km</td>
+                  <td>Planificada</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+        
+        <!-- Gestión de devoluciones y reclamos -->
+        <li class="accordion-item">
+          <div class="accordion-header">Gestión de devoluciones y reclamos</div>
+          <div class="accordion-content">
+            <p>Administra incidencias, devoluciones y reclamos de pedidos realizados.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID Devolución</th>
+                  <th>N° Pedido</th>
+                  <th>Motivo</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>D-001</td>
+                  <td>G-1001</td>
+                  <td>Producto defectuoso</td>
+                  <td>Procesando</td>
+                </tr>
+                <tr>
+                  <td>D-002</td>
+                  <td>G-1004</td>
+                  <td>Error en el envío</td>
+                  <td>Resuelto</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+        
+        <!-- Reportes e indicadores -->
+        <li class="accordion-item">
+          <div class="accordion-header">Reportes e indicadores</div>
+          <div class="accordion-content">
+            <p>Visualiza estadísticas clave que permitan evaluar el rendimiento logístico.</p>
+            <div class="card-container" style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 15px;">
+              <div style="flex: 1; min-width: 220px; background-color: #e6f2ff; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="margin-top: 0; font-size: 1.1em; color: #004080;">Total de Envíos</h3>
+                <p>250</p>
+              </div>
+              <div style="flex: 1; min-width: 220px; background-color: #e6f2ff; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="margin-top: 0; font-size: 1.1em; color: #004080;">Pedidos Pendientes</h3>
+                <p>15</p>
+              </div>
+              <div style="flex: 1; min-width: 220px; background-color: #e6f2ff; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="margin-top: 0; font-size: 1.1em; color: #004080;">Satisfacción del Cliente</h3>
+                <p>92%</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </main>
+  </div>
+
+  
+  <!-- analisis y reportes -->
+  <div id="analisisReportesDiv" class="admin-section" style="display:none;">
+    <main>
+      <button id="volverAlMenuPrincipalAnalisis">Volver al menú principal</button>
+      <!-- Contenedor de pestañas: Dashboard, Alertas y Soporte en Decisiones -->
+      <div class="tabs">
+        <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-button" data-tab="alertas">Alertas y Seguimiento</button>
+        <button class="tab-button" data-tab="decisiones">Soporte en Decisiones</button>
+      </div>
+
+      <!-- Contenido de las pestañas -->
+      <div class="tab-content active" id="dashboard">
+        <h2>Dashboard</h2>
+
+        <!-- Indicadores clave -->
+        <section>
+          <h3>Indicadores Clave</h3>
+          <div class="cards">
+            <div class="card">
+              <h3>Ventas Totales</h3>
+              <p>$75,000</p>
+            </div>
+            <div class="card">
+              <h3>Pedidos Realizados</h3>
+              <p>320</p>
+            </div>
+            <div class="card">
+              <h3>Satisfacción Cliente</h3>
+              <p>95%</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Productos más vendidos -->
+        <section>
+          <h3>Productos Más Vendidos</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Marca</th>
+                <th>Ventas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Camiseta Deportiva</td>
+                <td>Nike</td>
+                <td>1500</td>
+              </tr>
+              <tr>
+                <td>Zapatos Running</td>
+                <td>Adidas</td>
+                <td>1200</td>
+              </tr>
+              <tr>
+                <td>Smartphone</td>
+                <td>Samsung</td>
+                <td>800</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Hora pico de ventas -->
+        <section>
+          <h3>Hora Pico de Ventas</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th>Número de Pedidos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10:00 - 11:00</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <td>14:00 - 15:00</td>
+                <td>65</td>
+              </tr>
+              <tr>
+                <td>20:00 - 21:00</td>
+                <td>80</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <div class="tab-content" id="alertas">
+        <h2>Alertas y Seguimiento Proactivo</h2>
+        <ul>
+          <li>Alerta: Incremento en devoluciones de productos electrónicos.</li>
+          <li>Alerta: Disminución del tráfico web en las últimas 24 horas.</li>
+          <li>Alerta: Bajo stock en artículos de moda.</li>
+        </ul>
+      </div>
+
+      <div class="tab-content" id="decisiones">
+        <h2>Soporte en la Toma de Decisiones</h2>
+        <p>Basado en el análisis de datos, se recomiendan las siguientes acciones:</p>
+        <ol>
+          <li>Optimizar promociones en categorías de alta demanda.</li>
+          <li>Incrementar campañas en redes sociales para mejorar el tráfico.</li>
+          <li>Negociar mejores condiciones con proveedores y transportadoras.</li>
+        </ol>
+      </div>
+
+    </main>
+  </div>
+  <!-- Fin del bloque agregado -->
+
+
+    
+
+  <!-- Agrega todo este bloque aquí -->
+  <div id="ofertasDescuentosDiv" class="admin-section" style="display:none;">
+    <div class="container">
+      <h1>Crear Promoción</h1>
+      <form id="formPromocion">
+        <!-- Campo de descuento -->
+        <div>
+          <label for="descuento">Descuento (%)</label>
+          <input type="number" id="descuento" name="descuento" min="0" max="100" placeholder="Escribe el porcentaje de descuento" required>
+        </div>
+        <!-- Campo para elegir producto -->
+        <div>
+          <label for="producto">Producto</label>
+          <select id="producto" name="producto" required>
+            <option value="">Seleccione un producto</option>
+            <option value="producto1">Producto 1</option>
+            <option value="producto2">Producto 2</option>
+            <option value="producto3">Producto 3</option>
+          </select>
+        </div>
+        <!-- Fecha de inicio -->
+        <div>
+          <label for="fechaInicio">Fecha de inicio</label>
+          <input type="date" id="fechaInicio" name="fechaInicio" required>
+        </div>
+        <!-- Fecha de fin -->
+        <div>
+          <label for="fechaFin">Fecha de fin</label>
+          <input type="date" id="fechaFin" name="fechaFin" required>
+        </div>
+        <!-- Botón para crear promoción -->
+        <button type="button" onclick="crearPromocion()">Crear Promoción</button>
+      </form>
+      <!-- Mensaje de resultado -->
+      <div id="mensaje"></div>
+      <button id="volverAlMenuPrincipalOfertas">Volver al menú principal</button>
+    </div>
+  </div>
+  <!-- Fin del bloque agregado -->
+
+
+   
+
+  <!-- Agrega todo este bloque aquí -->
+  <div id="baseDatosClientesDiv" class="admin-section" style="display:none;">
+    <header>
+      <h1>Base de Datos de Clientes</h1>
+    </header>
+    <div class="container">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar cliente por nombre, email, etc...">
+        <button class="export-btn" onclick="exportTableToCSV('clientes.csv')">Exportar a CSV</button>
+      </div>
+      <table id="clientesTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th onclick="sortTable(1)">Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th onclick="sortTable(5)">Fecha Registro</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Fila 1 -->
+          <tr data-id="1" data-nombre="Juan Pérez" data-email="juan.perez@mail.com" data-telefono="+57 300 1112222" data-direccion="Calle 123, Bogotá" data-fecha="2025-01-15">
+            <td data-label="ID">1</td>
+            <td data-label="Nombre">Juan Pérez</td>
+            <td data-label="Email">juan.perez@mail.com</td>
+            <td data-label="Teléfono">+57 300 1112222</td>
+            <td data-label="Dirección">Calle 123, Bogotá</td>
+            <td data-label="Fecha Registro">2025-01-15</td>
+            <td data-label="Acciones">
+              <button class="action-btn edit-btn" onclick="editClient(this)">Editar</button>
+              <button class="action-btn delete-btn" onclick="deleteClient(this)">Eliminar</button>
+            </td>
+          </tr>
+          <!-- Fila 2 -->
+          <tr data-id="2" data-nombre="María Gómez" data-email="maria.gomez@mail.com" data-telefono="+57 310 3334444" data-direccion="Carrera 45, Medellín" data-fecha="2025-02-20">
+            <td data-label="ID">2</td>
+            <td data-label="Nombre">María Gómez</td>
+            <td data-label="Email">maria.gomez@mail.com</td>
+            <td data-label="Teléfono">+57 310 3334444</td>
+            <td data-label="Dirección">Carrera 45, Medellín</td>
+            <td data-label="Fecha Registro">2025-02-20</td>
+            <td data-label="Acciones">
+              <button class="action-btn edit-btn" onclick="editClient(this)">Editar</button>
+              <button class="action-btn delete-btn" onclick="deleteClient(this)">Eliminar</button>
+            </td>
+          </tr>
+          <!-- Fila 3 -->
+          <tr data-id="3" data-nombre="Carlos Díaz" data-email="carlos.diaz@mail.com" data-telefono="+57 320 5556666" data-direccion="Avenida 78, Cali" data-fecha="2025-03-10">
+            <td data-label="ID">3</td>
+            <td data-label="Nombre">Carlos Díaz</td>
+            <td data-label="Email">carlos.diaz@mail.com</td>
+            <td data-label="Teléfono">+57 320 5556666</td>
+            <td data-label="Dirección">Avenida 78, Cali</td>
+            <td data-label="Fecha Registro">2025-03-10</td>
+            <td data-label="Acciones">
+              <button class="action-btn edit-btn" onclick="editClient(this)">Editar</button>
+              <button class="action-btn delete-btn" onclick="deleteClient(this)">Eliminar</button>
+            </td>
+          </tr>
+          <!-- Se pueden agregar más filas -->
+        </tbody>
+      </table>
+    </div>
+  
+  
+  <!-- Interfaz de rastreo de envíos -->
+  <div id="trackingContainer" class="tracking-container" style="display: none;">
+     <h2>Rastrear Envío</h2>
+     <input type="text" id="trackingNumber" placeholder="Por ejemplo: G-2477645">
+     <button id="trackButton">Rastrear</button>
+     <div id="trackingResult" style="margin-top: 20px;"></div>
+  </div>
+
+  <!-- CART SIDEBAR (desplegable desde la derecha) -->
+  <div id="cartSidebar" class="cart-sidebar">
+    <span class="close-cart" id="closeCart">&times;</span>
+    <h1>Carrito de Compras</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cant.</th>
+          <th>Precio</th>
+          <th>Subtotal</th>
+          <th>Quitar</th>
+        </tr>
+      </thead>
+      <tbody id="cartItems">
+        <!-- filas inyectadas dinámicamente --> 
+      </tbody>
+    </table>
+    <div class="cart-summary">
+      <strong>Total: $<span id="cartTotal">0</span></strong>
+    </div>
+    <button class="checkout-button" onclick="checkout()">Proceder a pagar</button>
+  </div>
+  
+  <!-- INTERFASE DE CHECKOUT (inicialmente oculta) -->
+  <div id="checkoutContainer" class="checkout-container" style="display: none;">
+    <h1>Proceso de Pago</h1>
+    <section class="checkout-section">
+      <h2>Dirección de entrega</h2>
+      <p id="addressInfo">No se ha configurado.</p>
+      <button id="configureAddress">Configurar dirección</button>
+    </section>
+    <section class="checkout-section">
+      <h2>Productos</h2>
+      <div class="product-item">
+        <img src="imagenes/zapatos.png" alt="Zapatos deportivos">
+        <div class="product-details">
+          <p><strong>Nombre:</strong> Zapatos deportivos</p>
+          <p><strong>Referencia:</strong> ZAP1234</p>
+          <p><strong>Precio:</strong> $150.000</p>
+        </div>
+      </div>
+    </section>
+    <section class="checkout-section">
+      <h2>Fecha de entrega estimada</h2>
+      <p>Su pedido llegará en 7 días a partir de la fecha de confirmación.</p>
+      <p id="estimatedDelivery"></p>
+    </section>
+    <section class="checkout-section">
+      <h2>Mensaje al vendedor</h2>
+      <textarea id="sellerMessage" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+    </section>
+    <section class="checkout-section">
+      <h2>Opciones de pago</h2>
+      <label><input type="radio" name="payment" value="tarjeta" checked> Tarjeta de crédito/débito</label><br>
+      <label><input type="radio" name="payment" value="paypal"> PayPal</label><br>
+      <label><input type="radio" name="payment" value="transferencia"> Transferencia bancaria</label>
+    </section>
+    <div class="checkout-summary">
+      <p><strong>Total a pagar: $1.010.000</strong></p>
+    </div>
+    <button class="btn-pay" id="confirmPayBtn">Confirmar y pagar</button>
+  </div>
+
+  <!-- Overlay semitransparente bajo el carrito -->
+  <div id="cartOverlay"></div>
+  
+  <!-- Modal para el perfil -->
+  <div id="profileModal" class="modal">
+     <div class="modal-content">
+         <span class="close">&times;</span>
+         <h2>Datos del cliente</h2>
+          <p><strong>Nombre:</strong> </p>
+          <p><strong>Email:</strong> </p>
+          <p><strong>Teléfono:</strong></p>
+          <p><strong>Dirección:</strong> </p>
+        </div>
+    </div>
+    
+  </div>
+  </div>  
+
+  <!-- ======== SCRIPTS COMBINADOS ======== -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+/* ======================
+   UTILIDADES GLOBALES
+====================== */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+function showSpinner() {
+  const s = document.getElementById('loading-spinner');
+  if (s) s.style.display = 'block';
+}
+
+function hideSpinner() {
+  const s = document.getElementById('loading-spinner');
+  if (s) s.style.display = 'none';
+}
+
+function apiUrl(path) {
+  return path.startsWith('http') ? path : window.location.origin + path;
+}
+
+/* ======================
+   ALERTAS CON SWEETALERT
+====================== */
+function toast(msg, type = 'info') {
+  Swal.fire({
+    icon: type,
+    text: msg,
+    timer: 2000,
+    showConfirmButton: false
+  });
+}
+
+/* ======================
+   AUTENTICACIÓN
+====================== */
+async function registerUser(fullName, contact, password) {
+  showSpinner();
+  try {
+    const resp = await fetch(apiUrl('/api/auth/register'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName, contact, password })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || resp.statusText);
+
+    toast('Registro exitoso. Has iniciado sesión.', 'success');
+    sessionStorage.setItem('emporiumz_user', JSON.stringify(data.user));
+    onLoginSuccess(data.user);
+  } catch (err) {
+    toast('Error en registro: ' + err.message, 'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+async function loginUser(contact, password) {
+  showSpinner();
+  try {
+    const resp = await fetch(apiUrl('/api/auth/login'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contact, password })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || resp.statusText);
+
+    sessionStorage.setItem('emporiumz_user', JSON.stringify(data.user));
+    onLoginSuccess(data.user);
+    toast('Login exitoso', 'success');
+  } catch (err) {
+    toast('Error en login: ' + err.message, 'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+/* ======================
+   UI HELPERS
+====================== */
+function resetAllSections() {
+  ['#user-login-form', '#register-form', '#forgot-password-form']
+    .forEach(id => {
+      const el = $(id);
+      if (el) el.style.display = 'none';
+    });
+}
+
+function showLoginForm() {
+  resetAllSections();
+  const el = $('#user-login-form');
+  if (el) el.style.display = 'block';
+}
+
+function showRegisterFormUI() {
+  resetAllSections();
+  const el = $('#register-form');
+  if (el) el.style.display = 'block';
+}
+
+/* ======================
+   LOGIN EXITOSO
+====================== */
+function onLoginSuccess(user) {
+  const loginWrapper = $('#login-wrapper');
+  if (loginWrapper) loginWrapper.style.display = 'none';
+
+  const userApp = $('#user-app');
+  if (userApp) {
+    userApp.style.display = 'block';
+    userApp.innerHTML = `
+      <div id="homeContent">
+        <h2>Bienvenido, ${user.fullName || user.name}</h2>
+        <p>Contacto: ${user.contact}</p>
+        <div class="menu">
+          <button onclick="loadProducts()">Ver productos</button>
+          <button onclick="viewCart()">Ver carrito</button>
+          <button onclick="confirmLogout()">Cerrar sesión</button>
+        </div>
+        <div id="content-area" style="margin-top:20px;"></div>
+      </div>`;
+  }
+  loadProducts();
+}
+
+/* ======================
+   MANEJO DE FORMULARIOS
+====================== */
+function attachAuthListeners() {
+  const regForm = $('#register-form-element');
+  if (regForm) regForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fullName = $('#full-name').value.trim();
+    const contact = $('#reg-email-phone').value.trim();
+    const password = $('#reg-password').value;
+    if (!fullName || !contact || !password) {
+      toast('Completa todos los campos', 'warning');
+      return;
+    }
+    await registerUser(fullName, contact, password);
+  });
+
+  const loginForm = $('#user-login-form-element');
+  if (loginForm) loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const contact = $('#user-email-phone').value.trim();
+    const password = $('#password').value;
+    if (!contact || !password) {
+      toast('Completa todos los campos', 'warning');
+      return;
+    }
+    await loginUser(contact, password);
+  });
+
+  const sendCodeBtn = $('#send-code-btn');
+  if (sendCodeBtn) sendCodeBtn.addEventListener('click', () => {
+    const contacto = $('#user-email-phone').value.trim();
+    if (!contacto) {
+      toast('Ingresa tu correo o teléfono antes de enviar el código', 'error');
+      return;
+    }
+    toast('Código enviado correctamente', 'success');
+  });
+
+  const showRegister = $('#show-register');
+  if (showRegister) showRegister.addEventListener('click', (e) => {
+    e.preventDefault();
+    showRegisterFormUI();
+  });
+
+  const showLogin = $('#show-login');
+  if (showLogin) showLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    showLoginForm();
+  });
+}
+
+/* ======================
+   PRODUCTOS
+====================== */
+async function loadProducts() {
+  try {
+    showSpinner();
+    const resp = await fetch(apiUrl('/api/products'));
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || resp.statusText);
+    renderProducts(data);
+  } catch (err) {
+    toast('Error cargando productos: ' + err.message, 'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+function renderProducts(list) {
+  const container = $('#content-area');
+  if (!container) return;
+  container.innerHTML = list.map(p => `
+    <div class="product-card" style="margin:10px;padding:10px;border:1px solid #ddd;">
+      <img src="${p.img_url || '/imagenes/Camisapolo.jpg'}" width="100" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p><strong>$${Number(p.price).toLocaleString()}</strong></p>
+      <p>Stock: ${p.stock}</p>
+      <button onclick="addToCartFromUI('${p.sku}')">Añadir al carrito</button>
+    </div>
+  `).join('');
+}
+
+/* ======================
+   CARRITO
+====================== */
+async function addToCartFromUI(sku, qty = 1) {
+  const userStr = sessionStorage.getItem('emporiumz_user');
+  if (!userStr) { toast('Inicia sesión para agregar al carrito', 'warning'); return; }
+  const user = JSON.parse(userStr);
+  try {
+    showSpinner();
+    const resp = await fetch(apiUrl('/api/cart'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: user.id, sku, qty })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || resp.statusText);
+    toast('Producto agregado al carrito', 'success');
+  } catch (err) {
+    toast('Error agregando al carrito: ' + err.message, 'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+async function viewCart() {
+  const userStr = sessionStorage.getItem('emporiumz_user');
+  if (!userStr) { toast('Inicia sesión para ver el carrito', 'warning'); return; }
+  const user = JSON.parse(userStr);
+
+  try {
+    showSpinner();
+    const resp = await fetch(apiUrl(`/api/cart?userId=${user.id}`));
+    const cart = await resp.json();
+    if (!resp.ok) throw new Error(cart.error || resp.statusText);
+    renderCart(cart);
+  } catch (err) {
+    toast('Error cargando carrito: ' + err.message, 'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+function renderCart(cart) {
+  const container = $('#content-area');
+  if (!container) return;
+  if (!cart.length) {
+    container.innerHTML = `<p>Tu carrito está vacío.</p>`;
+    return;
+  }
+
+  let total = 0;
+  const html = cart.map(item => {
+    total += item.price * item.qty;
+    return `
+      <div style="border:1px solid #ddd;padding:10px;margin:10px;">
+        <p>${item.name} (x${item.qty}) - $${(item.price * item.qty).toLocaleString()}</p>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <h3>Tu carrito</h3>
+    ${html}
+    <h4>Total: $${total.toLocaleString()}</h4>
+    <button onclick="checkoutOrder()">Realizar pedido</button>
+  `;
+}
+
+/* ======================
+   CHECKOUT
+====================== */
+async function checkoutOrder() {
+  const userStr = sessionStorage.getItem('emporiumz_user');
+  if (!userStr) return toast('Inicia sesión', 'warning');
+  const user = JSON.parse(userStr);
+
+  const { value: formValues } = await Swal.fire({
+    title: 'Confirmar pedido',
+    html: `
+      <input id="swal-address" class="swal2-input" placeholder="Dirección de envío">
+      <input id="swal-payment" class="swal2-input" placeholder="Método de pago">
+    `,
+    focusConfirm: false,
+    preConfirm: () => {
+      return {
+        address: document.getElementById('swal-address').value,
+        payment: document.getElementById('swal-payment').value
+      }
+    }
+  });
+
+  if (!formValues.address || !formValues.payment) {
+    toast('Completa todos los campos', 'warning');
+    return;
+  }
+
+  try {
+    showSpinner();
+    const cartResp = await fetch(apiUrl(`/api/cart?userId=${user.id}`));
+    const cart = await cartResp.json();
+    if (!cartResp.ok) throw new Error(cart.error || cartResp.statusText);
+    if (!cart.length) { toast('Carrito vacío', 'warning'); return; }
+
+    const items = cart.map(i => ({ sku: i.sku, qty: i.qty, unitPrice: i.price }));
+    const resp = await fetch(apiUrl('/api/orders'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: user.id, ...formValues, items })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || resp.statusText);
+
+    toast('Pedido creado con éxito. ID: ' + (data.orderId || 'N/A'), 'success');
+  } catch (err) {
+    toast('Error creando pedido: ' + err.message, 'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+/* ======================
+   LOGOUT CON CONFIRMACIÓN
+====================== */
+function confirmLogout() {
+  Swal.fire({
+    title: '¿Cerrar sesión?',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, salir',
+    cancelButtonText: 'Cancelar',
+    icon: 'warning'
+  }).then(result => {
+    if (result.isConfirmed) {
+      sessionStorage.clear();
+      location.reload();
+    }
+  });
+}
+
+/* ======================
+   INICIALIZACIÓN
+====================== */
+document.addEventListener('DOMContentLoaded', () => {
+  if (!$('#loading-spinner')) {
+    const s = document.createElement('div');
+    s.id = 'loading-spinner';
+    s.style.display = 'none';
+    s.textContent = 'Cargando...';
+    document.body.appendChild(s);
+  }
+  attachAuthListeners();
+  showLoginForm();
+
+  const saved = sessionStorage.getItem('emporiumz_user');
+  if (saved) onLoginSuccess(JSON.parse(saved));
+});
+</script>
+
+
+
+
+
+
+</body>
+</html>
+

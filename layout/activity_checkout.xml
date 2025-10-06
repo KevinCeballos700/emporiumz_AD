@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/proceso_de_pago" android:textSize="20sp" android:textStyle="bold" android:gravity="center"/>
+
+        <LinearLayout android:orientation="vertical" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:text="@string/direcci_n_de_entrega" android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/etAddress"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints=""
+                android:hint="@string/ingrese_direcci_n_de_entrega"
+                android:inputType="textPostalAddress"
+                android:padding="8dp"
+                tools:ignore="VisualLintTextFieldSize" />
+            <Button
+                android:id="@+id/btnLoadCart"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Cargar carrito"
+                android:layout_marginTop="8dp"
+                tools:ignore="HardcodedText,VisualLintButtonSize" />
+        </LinearLayout>
+
+        <View android:layout_height="12dp" android:layout_width="match_parent"/>
+
+        <TextView android:text="@string/productos_en_carrito" android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/checkoutItems"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <View
+            android:layout_height="12dp"
+            android:layout_width="match_parent" />
+
+        <TextView android:text="@string/opciones_de_pago" android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/spinnerPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/total_a_pagar" android:textStyle="bold" android:layout_marginTop="12dp"/>
+        <TextView
+            android:id="@+id/checkoutTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="end"/>
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Confirmar y pagar"
+            android:layout_marginTop="16dp"
+            android:background="#354586"
+            android:textColor="#FFFFFF"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <!-- Elemento para mostrar tabla/filas si quieres debugging -->
+        <TextView
+            android:id="@+id/tvCartItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="(debug cart items)"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+</ScrollView>
